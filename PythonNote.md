@@ -1,5 +1,6 @@
 # Python to json
 ```python
+import json
 json.loads()
 json.dumps() 
 #sort_keys=True告訴編碼器由a-z輸出
