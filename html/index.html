@@ -3,7 +3,7 @@
   <head>
 
     <meta charset='utf-8'/>
-    <title>MyWeb</title>s
+    <title>MyWeb</title>
 
     <!-- <script src="css/leaflet.css"></script> -->
     <link rel="stylesheet" href="css/colorbrewer.css" />
@@ -11,7 +11,8 @@
     <style>
         html { height: 100% }
         body { height: 100%; margin: 0; padding: 0;}
-        #mapID{ height: 100% }
+        #mapID{ height: 100%; width: 80%;}
+        #info{ height: 100%; width: 20%;}
 
         .town { 
           stroke-width : 0;
@@ -29,7 +30,7 @@
   </head>
   <body>
 
-    <div id="mapID"></div>
+    <div id="mapID"></div><div id="info"></div>
 
     <script type="text/javascript" src="js/leaflet.js"></script>
     <script type="text/javascript" src="js/leaflet.css.js"></script>
@@ -40,7 +41,6 @@
     <script type="text/javascript" src="js/topojson.v0.js"></script>
     <script type="text/javascript" src="js/leaflet.d3.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
-    <script type="text/javascript" src="js/turf.min.js"></script>
 
   </body>
 </html>

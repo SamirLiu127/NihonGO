@@ -23,7 +23,7 @@ var data={}, layers={}, fills =[
 d3.json("json/jp.json", dealwithData);
 function dealwithData(oa){
 	data.json= oa.features.map(function(v){
-        return [v.geometry.coordinates[1],v.geometry.coordinates[0],v.properties.Name,v.geometry.count];
+        return [v.geometry.coordinates[1],v.geometry.coordinates[0],v.properties.Name,v.properties.point];
 	});
     points();
     //veronoi();
@@ -131,53 +131,6 @@ layers.svg.bindPopup(function(p){
 	return out.join("<br/>");
 	});
 lc.addOverlay(layers.svg,"Heatmap");
-
-
-// Heatmap2
-layers.svg2=L.d3("json/jpBlock.topo.json",{
-	topojson:"singleSeatBlock",
-	svgClass : "Spectral",
-	pathClass:function(d) {
-		// return "town q" + (10-layers.svg.quintile(d.properties.pop/layers.svg.path.area(d)))+"-11";
-
-		var pt = d.properties.pop;
-		// console.log(pt);
-		if(pt==0){return "town q6-7"}
-		else if(0<pt&&pt<=20){return "town q5-7"}
-		else if(20<pt&&pt<=50){return "town q4-7"}
-		else if(50<pt&&pt<=100){return "town q3-7"}
-		else if(100<pt&&pt<=200){return "town q2-7"}
-		else if(200<pt&&pt<=500){return "town q1-7"}
-		else if(500<pt){return "town q0-7"}
-	},
-	before: function(data){
-		var _this = this;
-		// console.log(_this);
-		this.quintile=d3.scale.quantile().domain(data.geometries.map(function(d){
-			var pt = d.properties.pop;
-			if(pt==0){return 6}
-			else if(0<pt&&pt<=20){return 5}
-			else if(20<pt&&pt<=50){return 4}
-			else if(50<pt&&pt<=100){return 3}
-			else if(100<pt&&pt<=200){return 2}
-			else if(200<pt&&pt<=500){return 1}
-			else if(500<pt){return 0}
-		})).range(d3.range(11));
-		// this.quintile=d3.scale.quantile().domain(data.geometries.map(function(d){return d.properties.pop/_this.path.area(d);})).range(d3.range(11));
-	}
-});
-layers.svg2.bindPopup(function(p){
-	var out =[];
-	out.push("<strong>Title</strong>: "+p['title']);
-	out.push("<strong>熱門度</strong>: "+p['pop']);
-	// for(var key in p){
-	// if(key !== "FOURCOLOR"){
-	// 	out.push("<strong>"+key+"</strong>: "+p[key]);
-	// 	}
-	// }
-	return out.join("<br/>");
-	});
-lc.addOverlay(layers.svg2,"Heatmap2");
 
 
 window.public = {};
