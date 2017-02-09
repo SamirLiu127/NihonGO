@@ -7,7 +7,7 @@ var baseMaps = [
 	"Esri.WorldImagery",
 	//"MapQuestOpen.OSM"
 ];
-var lc = L.control.layers.provided(baseMaps,{},{collapsed:false}).addTo(m);
+var lc = L.control.layers.provided(baseMaps,{},{collapsed:true}).addTo(m);
 m.addHash({lc:lc});
 var data={}, layers={}, fills =[
     "rgb(197,27,125)",
