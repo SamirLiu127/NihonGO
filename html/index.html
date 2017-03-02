@@ -1,46 +1,145 @@
 <!DOCTYPE html>
 <html lang="zh-tw">
-  <head>
-
-    <meta charset='utf-8'/>
-    <title>MyWeb</title>
-
-    <!-- <script src="css/leaflet.css"></script> -->
-    <link rel="stylesheet" href="css/colorbrewer.css" />
-    <script src="js/leaflet.js"></script>
-    <style>
-        html { height: 100% }
-        body { height: 100%; margin: 0; padding: 0;}
-        #mapID{ height: 100%; width: 80%; float: left;}
-        #info{ height: 100%; width: 20%; float: right;}
-
-        .town { 
-          stroke-width : 0;
-          fill: #000;
-          fill-opacity: .8;
-          stroke: #fff; 
-        }
-
-        .town:hover {
-          fill: rgb(109, 28, 28);
-          fill-opacity: .7;
-          cursor:pointer;
-        }
+   <head>
+      <meta charset='utf-8'/>
+      <title>NihonGo</title>
+      <ling rel="icon" type="image/x-icon" href="favicon.ico">
+      <link rel="stylesheet" href="css/leaflet.css">
+      <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+      <link rel="stylesheet" href="css/colorbrewer.css">
+      <style>
+         html { height: 100% }
+         body { height: 100%; margin: 0; padding: 0;}
+         #mapID{ height: 100%; width: 74%; float: left;}
+         #content{
+         height: 20%; 
+         width:25.5%; 
+         float: right;
+         text-align: center;
+         border-radius: 20px;}
+         /*background-color: rgba(252,244,217,0.5);}*/
+         img{padding:5px;}
+         #route{
+         height: 0%; width:25.5%; 
+         float: right;
+         background-color: #B6D0C9;
+         }
+         #article{ height: 80%; width:25.5%; float: right;background-color: rgba(142,210,201,0.3);font-size: 20px;font-family: "標楷體","Times New Roman";border:dashed 0px #000000;-moz-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;}
+         p {margin: 10px 10px 10px 10px;text-align: justify;}
+         h2{text-align: center;color: white; color: white; 
+         text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;}    
+         /*q{quotes: "\00ab" "\00bb" "\2039" "\203A";}*/
+         /*        .town { 
+         stroke-width : 0;
+         fill: #000;
+         fill-opacity: .8;
+         stroke: #fff; 
+         }
+         .town:hover {
+         fill: rgb(109, 28, 28);
+         fill-opacity: .7;
+         cursor:pointer;
+         }*/
+         .leaflet-marker-icon.sans-serif {
+         font-weight: bold;
+         font-family: Sans Serif;
+         }
+         .myMOUSE {
+         cursor: pointer;
+         color:blue;
+         }   
+         .legend {
+         line-height: 18px;
+         color: #555;
+         }
+         .legend i {
+         width: 28px;
+         height: 25px;
+         float: left;
+         margin-right: 8px;
+         opacity: 0.7;
+         }
+         .info {
+         padding: 6px 8px;
+         font: 18px/20px Arial, Helvetica, sans-serif;
+         background: white;
+         background: rgba(255,255,255,0.8);
+         box-shadow: 0 0 15px rgba(0,0,0,0.2);
+         border-radius: 5px;
+         }
+         .info h4 {
+         margin: 0 0 5px;
+         color: #777;
+         }
+         #ss{
+         font-size: 18px;
+         }
+         #nunu{
+         margin:0px;
+         padding:0px;
+         }
+         #hh{
+         width:70px;
+         }
+         #sss{
+         font-size:18px ;
+         margin:2px;
+         padding: 2px;
+         }
       </style>
-  </head>
-  <body>
-
-    <div id="mapID"></div><div id="info"></div>
-
-    <script type="text/javascript" src="js/leaflet.js"></script>
-    <script type="text/javascript" src="js/leaflet.css.js"></script>
-    <script type="text/javascript" src="js/leaflet.markercluster.js"></script>
-    <script type="text/javascript" src="js/leaflet.providers.js"></script>
-    <script type="text/javascript" src="js/leaflet.hash.js"></script>
-    <script type="text/javascript" src="js/d3.v3.js"></script>
-    <script type="text/javascript" src="js/topojson.v0.js"></script>
-    <script type="text/javascript" src="js/leaflet.d3.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-
-  </body>
+   </head>
+   <body>
+      <div id="mapID"></div>
+      <div id="content">
+         <img src="yokoso.jpg" alt="shrine View"; style="width:300px">
+         <select name='add1' onchange='choosetime(this.value)'>
+            <option value='1'>兩小時車程</option>
+            <option value='2'>三小時車程</option>
+            <option value='3'>四小時車程</option>
+         </select>
+         <!-- <img src="fuji.png" alt="fuji View" style="width:50px;height:50px;"> -->
+         <!-- <img src="kumamon.gif" alt="shrine View" style="width:50px;height:50px;";> -->
+      </div>
+      <div id="route"></div>
+      <div id="article">
+      </div>
+      <script type="text/javascript" src="js/leaflet.js"></script>
+      <script type="text/javascript" src="js/leaflet-src.js"></script>
+      <script type="text/javascript" src="js/Leaflet.Icon.Glyph.js"></script>
+      <script type="text/javascript" src="js/leaflet.markercluster.js"></script>
+      <script type="text/javascript" src="js/leaflet.markercluster-src.js"></script>
+      <script type="text/javascript" src="js/leaflet.providers.js"></script>
+      <script type="text/javascript" src="js/underscore-min.js"></script>
+      <script type="text/javascript" src="js/leaflet.VectorGrid.min.js"></script>
+      <script type="text/javascript" src="js/d3.v3.js"></script>
+      <!-- <script type="text/javascript" src="js/topojson.v0.js"></script> -->
+      <!-- <script type="text/javascript" src="js/topojson.v2.min.js"></script> -->
+      <script type="text/javascript" src="js/leaflet.d3.js"></script>
+      <script type="text/javascript" src="js/jquery-1.7.js"></script>
+      <script type="text/javascript" src="js/script.js"></script>
+      <script>
+         function choosetime(o){
+         
+         totaltime = (parseInt(o)+1)*3600;
+         console.log(totaltime);
+         // choose(nowusing);
+         // console.log(nowusing);
+         $('path[stroke="red"]').remove();
+         $('#route').empty();
+         $('path[stroke-opacity="1"').remove();
+         $('div[class="leaflet-marker-icon leaflet-glyph-icon leaflet-zoom-animated leaflet-interactive"]').remove();
+         }
+         
+      </script>
+      <!--  <div id="content"><h2><q>景點導覽</q></h2>
+         <img src="fuji.png" alt="fuji View" style="width:50px;height:50px;">
+         <img src="shrine.png" alt="shrine View" style="width:50px;height:50px;";>
+         
+         <img src="kumamon.gif" alt="shrine View" style="width:50px;height:50px;";>
+         </div>
+         <div id="route"></div>
+         <div id="article">
+         <img src="japan.jpg" alt="japan View" style="width:50px;height:50px;";>
+         </div> --> 
+   </body>
 </html>
