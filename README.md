@@ -1,1 +1,2 @@
-# Learning_python
+# BDSE03 FinalProject
+NihonGO
