@@ -53,3 +53,7 @@ with open('data.json', 'r') as f:
 |list.remove(x)|	移除 list 中第一個 x 元素|
 |list.reverse()|	倒轉 list 中元素的順序|
 |list.sort([key[, reverse]])|	排序 list 中的元素|
+
+
+## python open()
+![](https://i.stack.imgur.com/ExWNT.png)
